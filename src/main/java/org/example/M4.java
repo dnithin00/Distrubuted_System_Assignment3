@@ -5,7 +5,7 @@ import java.net.SocketException;
 
 public class M4 extends PaxosNode {
     public M4() throws SocketException {
-        super(4, 5, "acceptor");
+        super(4, 5, "acceptor", null);
         setDropMessages(false); // M4 doesn't drop messages
         setDelay(false); // No delay
         setAlwaysAccept(true);

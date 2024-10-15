@@ -5,7 +5,7 @@ import java.net.SocketException;
 
 public class M3 extends PaxosNode {
     public M3() throws SocketException {
-        super(3, 5, "acceptor");
+        super(3, 5, "acceptor", null);
         setDropMessages(false); // M3 doesn't drop messages
         setDelay(false); // Simulates delay
         //setAcceptancePreference(1); // M3 will only accept proposals from M1
