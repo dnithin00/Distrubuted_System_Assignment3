@@ -6,8 +6,8 @@ import java.net.SocketException;
 public class M2 extends PaxosNode {
     public M2() throws SocketException {
         super(2, 5, "acceptor", null);
-        setDropMessages(false); // Simulates dropping messages
-        setDelay(false); // Simulates delay in responses
+        setDropMessages(true); // Simulates dropping messages
+        setDelay(true); // Simulates delay in responses
         setAlwaysAccept(true); // M2 will not accept proposals by default
     }
 

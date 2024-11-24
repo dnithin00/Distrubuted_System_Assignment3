@@ -2,6 +2,7 @@ package org.example;
 //package org.example;
 
 import java.net.SocketException;
+import java.util.Arrays;
 
 public class M3 extends PaxosNode {
     public M3() throws SocketException {
@@ -10,6 +11,7 @@ public class M3 extends PaxosNode {
         setDelay(false); // Simulates delay
         //setAcceptancePreference(1); // M3 will only accept proposals from M1
         setAlwaysAccept(true); // M2 will not accept proposals by default
+        setPreferredNominees(Arrays.asList(1, 2, 3));
 
     }
 

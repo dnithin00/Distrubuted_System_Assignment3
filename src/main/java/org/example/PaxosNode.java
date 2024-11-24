@@ -30,6 +30,10 @@ public class PaxosNode {
     private Integer nomineeId;  // New variable for the president nominee
 
 
+    private List<Integer> preferredNominees;
+    private List<Integer> preferredProposers;
+
+
     public PaxosNode(int id, int majority, String role, Integer nomineeId) throws SocketException {
         this.id = id;
         this.majority = majority;
@@ -156,8 +160,15 @@ public class PaxosNode {
         long timeout = 5000;  // 5 seconds
 
 
+        System.out.println(System.currentTimeMillis());
+        System.out.println(startTime);
+        System.out.println(timeout);
         while (System.currentTimeMillis() - startTime < timeout && totalResponses < 9) {  // Wait until all 9 nodes or timeout
             try {
+                System.out.println("current millis: " +System.currentTimeMillis());
+                System.out.println("start Time: " +startTime);
+                System.out.println("timeout: "+ timeout);
+                System.out.println("System.currentTimeMillis() - startTime < timeout:" + (System.currentTimeMillis() - startTime < timeout));
                 byte[] buffer = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet); // Receive a packet
@@ -166,6 +177,8 @@ public class PaxosNode {
                 processResponse(receivedMessage, packet.getAddress(), packet.getPort());
 
                 totalResponses++;
+            System.out.println("totalResponse: " + totalResponses +  "promise count: "+ promiseCount);
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -189,6 +202,7 @@ public class PaxosNode {
         // **After promises are gathered, wait for majority Accepted values**
         listenForAcceptedValues();
     }
+
     private void listenForAcceptedValues() {
         int acceptedCount = 0;  // Count the number of accepted responses
 
@@ -219,6 +233,8 @@ public class PaxosNode {
             int promisedProposal = Integer.parseInt(parts[1]);
             promises.put(port, promisedProposal);
             promiseCount++;
+//            System.out.println("totalResponse: " +);
+            System.out.println( " PromiseCount: " +promiseCount);
             System.out.println("Node " + id + " received promise from Node " + (port - 8000) + " for proposal " + promisedProposal);
 
             // Handle Reject response
@@ -317,6 +333,18 @@ public class PaxosNode {
             int acceptedProposalNumber = Integer.parseInt(parts[1]);
             int presidentNomineeId = Integer.parseInt(parts[3]);
 
+            if (parts[0].equals("Accept")) {
+                 acceptedProposalNumber = Integer.parseInt(parts[1]);
+                 presidentNomineeId = Integer.parseInt(parts[3]);
+
+                // Check if nominee is in the preferred list
+                if (preferredNominees != null && !preferredNominees.contains(presidentNomineeId)) {
+                    System.out.println("Node " + id + " rejects nominee " + presidentNomineeId + " (not preferred).");
+                    String rejectResponse = "Reject:" + acceptedProposalNumber;
+                    sendMessage(rejectResponse, port);
+                    return;
+                }
+            }
             // Accept based on proposal number
             if (acceptedProposalNumber >= highestPromisedProposal) {
                 highestPromisedProposal = acceptedProposalNumber;
@@ -359,5 +387,13 @@ public class PaxosNode {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setPreferredNominees(List<Integer> nominees) {
+        this.preferredNominees = nominees;
+    }
+
+    public void setPreferredProposers(List<Integer> proposers) {
+        this.preferredProposers = proposers;
     }
 }

@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="375d27a4-5e54-4e15-9c87-eb9155c64b11" name="Changes" comment="Basic Implementation version2">
+    <list default="true" id="375d27a4-5e54-4e15-9c87-eb9155c64b11" name="Changes" comment="Implementation without delay/drop from acceptors is implemented. should check when not all members promise.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M10.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M6.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M7.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M7.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M8.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M8.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M9.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M9.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.M1.executor": "Run",
+    "Application.M1.executor": "Debug",
     "Application.M10.executor": "Run",
     "Application.M2.executor": "Run",
     "Application.M3.executor": "Run",
@@ -162,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728902757454</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implementation without delay/drop from acceptors is implemented. should check when not all members promise.">
+      <option name="closed" value="true" />
+      <created>1728982865658</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728982865658</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,7 +180,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="basic" />
     <MESSAGE value="Basic Implementation version2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic Implementation version2" />
+    <MESSAGE value="Implementation without delay/drop from acceptors is implemented. should check when not all members promise." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementation without delay/drop from acceptors is implemented. should check when not all members promise." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -191,28 +193,38 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>253</line>
+          <line>269</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>348</line>
+          <line>376</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>132</line>
+          <line>136</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>122</line>
+          <line>126</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>221</line>
-          <option name="timeStamp" value="19" />
+          <line>188</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
+          <line>159</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
