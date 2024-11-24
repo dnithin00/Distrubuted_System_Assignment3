@@ -1,8 +1,5 @@
 package org.example;
-import java.net.DatagramSocket;
-import java.net.DatagramPacket;
-import java.net.SocketException;
-import java.net.InetAddress;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -151,35 +148,36 @@ public class PaxosNode {
 //        listenForAcceptedValues();
 //    }
     private void listenForResponses() {
-         promiseCount = 0;
-        rejectionCount = 0;  // Track rejections
+        promiseCount = 0;
+        rejectionCount = 0;
         int totalResponses = 0;
-
-        // Time-based waiting (timeout of 3 seconds for example)
+        int expectedResponses = 9; // Total nodes in the cluster
         long startTime = System.currentTimeMillis();
-        long timeout = 5000;  // 5 seconds
+        long timeout = 3000; // Timeout in milliseconds
 
+        try {
+            socket.setSoTimeout((int) timeout); // Set socket timeout to prevent indefinite blocking
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
 
-        System.out.println(System.currentTimeMillis());
-        System.out.println(startTime);
-        System.out.println(timeout);
-        while (System.currentTimeMillis() - startTime < timeout && totalResponses < 9) {  // Wait until all 9 nodes or timeout
+        while ((System.currentTimeMillis() - startTime < timeout) && totalResponses < expectedResponses) {
             try {
-                System.out.println("current millis: " +System.currentTimeMillis());
-                System.out.println("start Time: " +startTime);
-                System.out.println("timeout: "+ timeout);
-                System.out.println("System.currentTimeMillis() - startTime < timeout:" + (System.currentTimeMillis() - startTime < timeout));
+                System.out.println("Waiting for responses...");
                 byte[] buffer = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
                 socket.receive(packet); // Receive a packet
 
                 String receivedMessage = new String(packet.getData()).trim();
                 processResponse(receivedMessage, packet.getAddress(), packet.getPort());
 
                 totalResponses++;
-            System.out.println("totalResponse: " + totalResponses +  "promise count: "+ promiseCount);
+                System.out.println("Total Responses: " + totalResponses + " | Promise Count: " + promiseCount);
 
-
+            } catch (SocketTimeoutException e) {
+                System.out.println("Socket timeout reached while waiting for responses.");
+                break; // Exit loop on socket timeout
             } catch (Exception e) {
                 e.printStackTrace();
             }

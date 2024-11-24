@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="375d27a4-5e54-4e15-9c87-eb9155c64b11" name="Changes" comment="Implementation without delay/drop from acceptors is implemented. should check when not all members promise.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M7.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M7.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728982865658</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implementation without delay/drop from acceptors is implemented. should check when not all members promise.">
+      <option name="closed" value="true" />
+      <created>1732418053259</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732418053259</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,37 +198,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>269</line>
+          <line>267</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>376</line>
+          <line>374</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>136</line>
+          <line>133</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>126</line>
+          <line>123</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>188</line>
+          <line>186</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>159</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>190</line>
+          <line>188</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
