@@ -7,7 +7,7 @@ public class M4 extends PaxosNode {
     public M4() throws SocketException {
         super(4, 5, "acceptor", null);
         setDropMessages(false); // M4 doesn't drop messages
-        setDelay(false); // No delay
+        setShortDelay(false); // No delay
         setAlwaysAccept(true);
 
         //setAcceptancePreference(2); // M4 will only accept proposals from M2

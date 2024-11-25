@@ -8,10 +8,10 @@ public class M3 extends PaxosNode {
     public M3() throws SocketException {
         super(3, 5, "acceptor", null);
         setDropMessages(false); // M3 doesn't drop messages
-        setDelay(false); // Simulates delay
+        setShortDelay(false); // Simulates delay
         //setAcceptancePreference(1); // M3 will only accept proposals from M1
         setAlwaysAccept(true); // M2 will not accept proposals by default
-        setPreferredNominees(Arrays.asList(1, 2, 3));
+        setPreferredNominees(Arrays.asList(3));
 
     }
 

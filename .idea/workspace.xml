@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="375d27a4-5e54-4e15-9c87-eb9155c64b11" name="Changes" comment="Implementation without delay/drop from acceptors is implemented. should check when not all members promise.">
+    <list default="true" id="375d27a4-5e54-4e15-9c87-eb9155c64b11" name="Changes" comment="Should time delay for all members, and then move on to testcases.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/AllTestCases.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Readme.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M10.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M7.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M7.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M8.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M8.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/M9.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/M9.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,26 +45,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.M1.executor": "Debug",
-    "Application.M10.executor": "Run",
-    "Application.M2.executor": "Run",
-    "Application.M3.executor": "Run",
-    "Application.M4.executor": "Run",
-    "Application.M5.executor": "Run",
-    "Application.M6.executor": "Run",
-    "Application.M7.executor": "Run",
-    "Application.M8.executor": "Run",
-    "Application.M9.executor": "Run",
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "C:/Users/Nithin/IdeaProjects/DistrubtedSystemAssignment3Version2/src/main/java/org/example/Main.java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.M1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M10.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M3.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M4.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M5.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M6.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M7.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M8.executor&quot;: &quot;Run&quot;,
+    &quot;Application.M9.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AllTestCases.testDelayedResponse.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AllTestCases.testDelayedResponseProposerDropsOff.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AllTestCases.testOnly5MembersAreAvailable.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AllTestCases.testSimpleElection.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AllTestCases.testSimultaneousProposals.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Nithin/IdeaProjects/DistrubtedSystemAssignment3Version2/src/main/java/org/example/Main.java&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.M1">
+}</component>
+  <component name="RunManager" selected="JUnit.AllTestCases.testOnly5MembersAreAvailable">
     <configuration name="M1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.M1" />
       <module name="DistrubtedSystemAssignment3Version2" />
@@ -65,8 +83,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="M10" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.M10" />
+    <configuration name="AllTestCases.testDelayedResponse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DistrubtedSystemAssignment3Version2" />
       <extension name="coverage">
         <pattern>
@@ -74,12 +91,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.AllTestCases" />
+      <option name="METHOD_NAME" value="testDelayedResponse" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="M7" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.M7" />
+    <configuration name="AllTestCases.testOnly5MembersAreAvailable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DistrubtedSystemAssignment3Version2" />
       <extension name="coverage">
         <pattern>
@@ -87,12 +107,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.AllTestCases" />
+      <option name="METHOD_NAME" value="testOnly5MembersAreAvailable" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="M8" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.M8" />
+    <configuration name="AllTestCases.testSimpleElection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DistrubtedSystemAssignment3Version2" />
       <extension name="coverage">
         <pattern>
@@ -100,12 +123,15 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.AllTestCases" />
+      <option name="METHOD_NAME" value="testSimpleElection" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="M9" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.M9" />
+    <configuration name="AllTestCases.testSimultaneousProposals" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DistrubtedSystemAssignment3Version2" />
       <extension name="coverage">
         <pattern>
@@ -113,17 +139,21 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="MAIN_CLASS_NAME" value="org.example.AllTestCases" />
+      <option name="METHOD_NAME" value="testSimultaneousProposals" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AllTestCases.testOnly5MembersAreAvailable" />
+        <item itemvalue="JUnit.AllTestCases.testSimultaneousProposals" />
+        <item itemvalue="JUnit.AllTestCases.testSimpleElection" />
+        <item itemvalue="JUnit.AllTestCases.testDelayedResponse" />
         <item itemvalue="Application.M1" />
-        <item itemvalue="Application.M10" />
-        <item itemvalue="Application.M9" />
-        <item itemvalue="Application.M8" />
-        <item itemvalue="Application.M7" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732418053259</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Should time delay for all members, and then move on to testcases.">
+      <option name="closed" value="true" />
+      <created>1732418894599</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732418894599</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -186,7 +224,8 @@
     <MESSAGE value="basic" />
     <MESSAGE value="Basic Implementation version2" />
     <MESSAGE value="Implementation without delay/drop from acceptors is implemented. should check when not all members promise." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementation without delay/drop from acceptors is implemented. should check when not all members promise." />
+    <MESSAGE value="Should time delay for all members, and then move on to testcases." />
+    <option name="LAST_COMMIT_MESSAGE" value="Should time delay for all members, and then move on to testcases." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -198,33 +237,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>267</line>
+          <line>218</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>374</line>
+          <line>332</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>133</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>186</line>
+          <line>141</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/PaxosNode.java</url>
-          <line>188</line>
+          <line>143</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/AllTestCases.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

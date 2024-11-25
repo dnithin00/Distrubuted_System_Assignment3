@@ -6,63 +6,67 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+
 public class PaxosNode {
+    // Variable declaration
     private int id;  // Node ID
     private int majority;  // Majority needed for consensus
     private DatagramSocket socket; // Socket for communication
     private String role; // Role of the node (proposer, acceptor)
     private int promiseCount = 0;
-
-
     private int proposalNumber; // Current proposal number (round identifier)
     private int rejectionCount;
     private Map<Integer, Integer> promises; // Store promises made by acceptors
     private int highestPromisedProposal; // Track the highest promised proposal number by this acceptor
     private List<Integer> acceptedValues; // Store accepted values from acceptors
-
-    private boolean isDelayed; // Flag for simulating delays
+    private boolean isShortDelay; // Flag for simulating delays
     private boolean dropMessages; // Flag for simulating message drops
     private boolean alwaysAccept;  // Flag for custom acceptance rule
-    private int preferredProposerId; // If the node only accepts from a specific proposer (e.g., M3 likes M1)
+    private int preferredProposerId; // If the node only accepts from a specific proposer (M1, M2, M3 only votes for itself)
     private Integer nomineeId;  // New variable for the president nominee
-
-
     private List<Integer> preferredNominees;
     private List<Integer> preferredProposers;
+    private Integer currentPresident; // Store the ID of the elected president
+    private boolean isLongDelay;
 
-
+    // Constructor
     public PaxosNode(int id, int majority, String role, Integer nomineeId) throws SocketException {
         this.id = id;
         this.majority = majority;
         this.role = role;
-        //this.nomineeId = nomineeId;
-        // For proposers, nomineeId is required. For acceptors, we set it to -1 by default.
         if (role.equals("proposer") && nomineeId != null) {
             this.nomineeId = nomineeId;  // Nominee provided by proposer
         } else {
             this.nomineeId = -1;  // Default for acceptors
         }
         this.socket = new DatagramSocket(8000 + id); // Each node listens on a port based on its ID
-        this.proposalNumber = 1000;
-        this.highestPromisedProposal = 0; // Initialize the highest promised proposal
+        proposalNumber = id * 10 + 1;
+        this.highestPromisedProposal = 0; // Initializing the highest promised proposal
         this.promises = new HashMap<>();
         this.acceptedValues = new ArrayList<>();
-        this.isDelayed = false; // Default is no delay
+        this.isShortDelay = false; // Default is no delay
         this.dropMessages = false; // Default is not to drop messages
         this.alwaysAccept = true;  // Default to always accept
         this.preferredProposerId = -1; // No preference by default
+        this.isLongDelay = false;
+        System.out.println("Welcome to Adelaide Suburbs Council Election !");
+
     }
 
-    public void setDelay(boolean isDelayed) {
-        this.isDelayed = isDelayed;
+    public void setShortDelay(boolean isDelayed) {
+        this.isShortDelay = isDelayed;
     }
+    public void setLongDelay(boolean isDelayed) {
+        this.isLongDelay = isDelayed;
+    }
+
 
     public void setDropMessages(boolean dropMessages) {
         this.dropMessages = dropMessages;
     }
 
     public void start() {
-        // Start node based on its role
+        // Starting node based on its role
         if (role.equals("proposer")) {
             startAsProposer();
         } else if (role.equals("acceptor")) {
@@ -71,89 +75,37 @@ public class PaxosNode {
             throw new IllegalArgumentException("Invalid role specified");
         }
     }
-
+    // Method for nodes acting as proposer
     private void startAsProposer() {
         System.out.println("Node " + id + " is starting as Proposer.");
-
         // Propose a value
         sendPrepareMessage();
-
         // Wait for responses from acceptors
         listenForResponses();
     }
 
+    //The Proposer sends prepare message to all nodes.
     private void sendPrepareMessage() {
         // Increment proposal number (this acts as a round identifier)
+        proposalNumber = id * 10 + 1;
         proposalNumber++;
-        // Propose a new value (here we can just use the node's ID for simplicity)
-        //here I should the president nominee id aswell? the acceptors should knwo right? which nominee they are voting for
-        //no not here, in the proposal/accept message?
-        //String message = "Prepare:" + proposalNumber + " From member:" + id;
-        // The message now includes both the proposal number and the ID of the proposer
         String message = "Prepare:" + proposalNumber + ":FromMember:" + id + ":Nominee:" + nomineeId;
-
-
-
         System.out.println("Node " + id + " is proposing value with proposal number " + proposalNumber + "for member nominee: " + nomineeId);
-
         // Send Prepare message to all acceptors
-        for (int i = 2; i <= 10; i++) { // Assume there are 10 nodes in total
+        for (int i = 2; i <= 10; i++) {
             if (i != id) {
                 sendMessage(message, 8000 + i);
             }
         }
     }
-
-//    private void listenForResponses() {
-//        promiseCount = 0;
-//        rejectionCount = 0;  // Track rejections
-//        int totalResponses = 0;
-//
-//        // Time-based waiting (timeout of 5 seconds)
-//        long startTime = System.currentTimeMillis();
-//        long timeout = 5000;  // 5 seconds
-//
-//        // Wait until all nodes respond or timeout is reached
-//        while (System.currentTimeMillis() - startTime < timeout && totalResponses < 10) {  // Assume 10 nodes in total
-//            try {
-//                byte[] buffer = new byte[1024];
-//                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-//                socket.receive(packet); // Receive a packet
-//
-//                String receivedMessage = new String(packet.getData()).trim();
-//                processResponse(receivedMessage, packet.getAddress(), packet.getPort());
-//
-//                totalResponses++;
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        // Evaluate promises and rejections after timeout or after all responses are received
-//        if (promiseCount >= majority) {
-//            // Now send Accept requests to those who promised
-//            sendProposalMessage();
-//        } else if (promiseCount < majority) {
-//            // Retry with a higher proposal number if majority rejected
-//            System.out.println("Node " + id + " proposal was rejected by majority. Retrying with a higher proposal number...");
-//            proposalNumber++;
-//            sendPrepareMessage();
-//        } else {
-//            System.out.println("Timed out before receiving enough responses, proceeding with available data.");
-//            // Optionally retry or fail the proposal based on your protocol design
-//        }
-//
-//        // After promises are gathered, wait for majority Accepted values
-//        listenForAcceptedValues();
-//    }
+    // Method for the proposer to listen to responses from all nodes.
     private void listenForResponses() {
         promiseCount = 0;
         rejectionCount = 0;
         int totalResponses = 0;
         int expectedResponses = 9; // Total nodes in the cluster
         long startTime = System.currentTimeMillis();
-        long timeout = 3000; // Timeout in milliseconds
+        long timeout = 10000; // Timeout in milliseconds
 
         try {
             socket.setSoTimeout((int) timeout); // Set socket timeout to prevent indefinite blocking
@@ -173,11 +125,14 @@ public class PaxosNode {
                 processResponse(receivedMessage, packet.getAddress(), packet.getPort());
 
                 totalResponses++;
-                System.out.println("Total Responses: " + totalResponses + " | Promise Count: " + promiseCount);
-
             } catch (SocketTimeoutException e) {
-                System.out.println("Socket timeout reached while waiting for responses.");
-                break; // Exit loop on socket timeout
+                System.out.println("Socket timeout reached while waiting for responses. Waited for 10 seconds");
+                if(totalResponses < 5)
+                {
+                    System.out.println("Not enough members are available, consensus could not be reached");
+                    return;
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -192,17 +147,17 @@ public class PaxosNode {
             System.out.println("Node " + id + " proposal was rejected by majority. Retrying with a higher proposal number...");
             proposalNumber++;
             sendPrepareMessage();
-            //sendPrepareMessages();
         } else {
             System.out.println("Timed out before receiving enough responses, proceeding with available data.");
         }
 
-        // **After promises are gathered, wait for majority Accepted values**
+        // After promises are gathered, wait for majority Accepted values
         listenForAcceptedValues();
     }
 
+    // Method for proposer to listen for Accept or Reject response from node.
     private void listenForAcceptedValues() {
-        int acceptedCount = 0;  // Count the number of accepted responses
+        int acceptedCount = 0;  // Counting the number of accepted responses
 
         while (acceptedCount < majority) {
             try {
@@ -214,7 +169,7 @@ public class PaxosNode {
                 if (receivedMessage.startsWith("Accepted")) {
                     processResponse(receivedMessage, packet.getAddress(), packet.getPort());
 
-                    acceptedCount = acceptedValues.size();  // Track the count of accepted values
+                    acceptedCount = acceptedValues.size();  // Tracking the count of accepted values
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -222,32 +177,29 @@ public class PaxosNode {
         }
     }
 
-    //Proposer method
+    //Proposer Method: to process responses from acceptor nodes.
     private void processResponse(String message, InetAddress address, int port) {
-        // Handle responses from acceptors
+        // Handling responses from acceptors
         String[] parts = message.split(":");
-        // Handle Promise response
+        // Handling Promise response
         if (parts[0].equals("Promise")) {
             int promisedProposal = Integer.parseInt(parts[1]);
             promises.put(port, promisedProposal);
             promiseCount++;
-//            System.out.println("totalResponse: " +);
-            System.out.println( " PromiseCount: " +promiseCount);
-            System.out.println("Node " + id + " received promise from Node " + (port - 8000) + " for proposal " + promisedProposal);
+           System.out.println("Node " + id + " received promise from Node " + (port - 8000) + " for proposal " + promisedProposal);
 
-            // Handle Reject response
+            // Handling Reject response
         } else if (parts[0].equals("Reject")) {
             int rejectedProposal = Integer.parseInt(parts[1]);
             System.out.println("Node " + id + " received rejection from Node " + (port - 8000) + " for proposal " + rejectedProposal);
             rejectionCount++;
         }
 
-        // Handle Accepted response
+        // Handling Accepted response
         else if (parts[0].equals("Accepted")) {
             int presidentNominee = Integer.parseInt(parts[1]);
             int acceptorMemberId = Integer.parseInt(parts[2]);
             acceptedValues.add(presidentNominee);
-            //here put in more detail, which member accepted and nominee number
             System.out.println("Node " + id + " learned that member " + acceptorMemberId + " accepted, member "+ presidentNominee + " as the president");
 
             // Check if the majority has accepted a value
@@ -257,34 +209,38 @@ public class PaxosNode {
         }
     }
 
+    // Proposer method to send proposal to promised acceptors
     private void sendProposalMessage() {
-        // Send Accept messages to the acceptors who promised
+        // Sending Accept messages to the acceptors who promised
         for (Map.Entry<Integer, Integer> entry : promises.entrySet()) {
             int port = entry.getKey();
-            //This is a proposal from proposer, here I should mention the nominee id.
-            //String message = "Accept:" + proposalNumber + ":" + " President Nominee is member number: "+ id; // Value to accept is the node's ID for simplicity
             String message = "Accept:" + proposalNumber + ":PresidentNominee:" + nomineeId;
 
             sendMessage(message, port);
         }
     }
 
+    // Acceptor Method to start node as acceptor
     private void startAsAcceptor() {
-        System.out.println("Node " + id + " is starting as Acceptor.");
+        System.out.println("Member " + id + " is starting as Acceptor.");
         while (true) {
             try {
                 byte[] buffer = new byte[1024];
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet); // Receive a packet
 
-                // Simulate delay
-                if (isDelayed) {
+                // Simulating delay
+                if (isShortDelay) {
                     Thread.sleep(2000); // Simulating a 2-second delay
+                    System.out.println("Member " + id + " has a short delay");
                 }
-
-                // Simulate message dropping
+                if (isLongDelay) {
+                    Thread.sleep(10000); // Simulating a 3-second delay
+                    System.out.println("Member " + id + " has a long delay");
+                }
+                // Simulating message dropping
                 if (dropMessages && new Random().nextBoolean()) {
-                    System.out.println("Node " + id + " dropped a message.");
+                    System.out.println("Member " + id + " dropped a message.");
                     continue; // Skip processing this packet
                 }
 
@@ -307,8 +263,7 @@ public class PaxosNode {
         this.alwaysAccept = alwaysAccept;
     }
 
-    // Modify processAcceptRequest to consider acceptance preferences
-    //Acceptor method
+    //Acceptor method to propcess messages from Proposer node.
     private void processAcceptRequest(String message, InetAddress address, int port) {
         String[] parts = message.split(":");
         if (parts[0].equals("Prepare")) {
@@ -320,12 +275,12 @@ public class PaxosNode {
                 highestPromisedProposal = proposedNumber;
                 String response = "Promise:" + highestPromisedProposal;
                 sendMessage(response, port);
-                System.out.println("Node " + id + " promised for proposal number " + proposedNumber + " from member number:" + fromNode);
+                System.out.println("Member " + id + " promised for proposal number " + proposedNumber + " from member number:" + fromNode);
             } else {
-                // Send a reject response if the proposed number is lower than the highest promised
+                // Sending a reject response if the proposed number is lower than the highest promised
                 String rejectResponse = "Reject:" + proposedNumber;
                 sendMessage(rejectResponse, port);
-                System.out.println("Node " + id + " rejected proposal number " + proposedNumber + " (current highest promised is " + highestPromisedProposal + ")" + "from member number:" + fromNode);
+                System.out.println("Member " + id + " rejected proposal number " + proposedNumber + " (current highest promised is " + highestPromisedProposal + ")" + "from member number:" + fromNode);
             }
         } else if (parts[0].equals("Accept")) {
             int acceptedProposalNumber = Integer.parseInt(parts[1]);
@@ -335,9 +290,9 @@ public class PaxosNode {
                  acceptedProposalNumber = Integer.parseInt(parts[1]);
                  presidentNomineeId = Integer.parseInt(parts[3]);
 
-                // Check if nominee is in the preferred list
+                // Checking if nominee is in the preferred list
                 if (preferredNominees != null && !preferredNominees.contains(presidentNomineeId)) {
-                    System.out.println("Node " + id + " rejects nominee " + presidentNomineeId + " (not preferred).");
+                    System.out.println("Member " + id + " rejects nominee " + presidentNomineeId + " (not preferred).");
                     String rejectResponse = "Reject:" + acceptedProposalNumber;
                     sendMessage(rejectResponse, port);
                     return;
@@ -349,25 +304,28 @@ public class PaxosNode {
                 //sending the acceptoes id to proposer along with "Accepted" message and presidentNomineeId
                 String response = "Accepted:" + presidentNomineeId + ":" + id;
                 sendMessage(response, port);
-                System.out.println("Node " + id + " accepted value for president nomination of member " + presidentNomineeId);
+                System.out.println("Member " + id + " accepted value for president nomination of member " + presidentNomineeId);
             } else {
-                // Send a reject response if the accepted proposal number is lower than the highest promised
+                // Sending a reject response if the accepted proposal number is lower than the highest promised
                 String rejectResponse = "Reject:" + acceptedProposalNumber;
                 sendMessage(rejectResponse, port);
-                System.out.println("Node " + id + " rejected acceptance of proposal number " + acceptedProposalNumber + " (current highest promised is " + highestPromisedProposal + ")");
+                System.out.println("Member " + id + " rejected acceptance of proposal number " + acceptedProposalNumber + " (current highest promised is " + highestPromisedProposal + ")");
             }
         } else if (parts[0].equals("PresidentElected")) {
             int presidentId = Integer.parseInt(parts[1]);
-            System.out.println("Node " + id + " has learned that Node " + presidentId + " is the new president.");
+            System.out.println("Member " + id + " has learned that Node " + presidentId + " is the new president.");
             // Optionally, store this information for future use
         }
     }
 
-
+    // Method used by proposer to broadcast new president to all nodes.
     private void announceElectionResult(int presidentId) {
-        System.out.println("Node " + id + " announces the new president is Member " + presidentId);
+        System.out.println("Member " + id + " announces the new president is Member " + presidentId );
 
-        // Broadcast the announcement to all nodes
+        // Update the elected president
+        this.currentPresident = presidentId;
+
+        // Broadcasting the announcement to all nodes
         String message = "PresidentElected:" + presidentId;
 
         for (int i = 1; i <= 10; i++) { // Assume there are 10 nodes in total
@@ -377,6 +335,7 @@ public class PaxosNode {
         }
     }
 
+    // Method used to send messages through socket connection
     private void sendMessage(String message, int port) {
         try {
             byte[] buffer = message.getBytes();
@@ -386,12 +345,24 @@ public class PaxosNode {
             e.printStackTrace();
         }
     }
-
+    // Setter for preferred nominees
     public void setPreferredNominees(List<Integer> nominees) {
         this.preferredNominees = nominees;
     }
 
     public void setPreferredProposers(List<Integer> proposers) {
         this.preferredProposers = proposers;
+    }
+    // Getter for currentPresident
+    public Integer getCurrentPresident() {
+        return currentPresident;
+    }
+    // Setter for nomineeId
+    public void setNomineeId(int nomineeId) {
+        this.nomineeId = nomineeId;
+    }
+
+    public Integer getNomineeId() {
+        return nomineeId;
     }
 }
