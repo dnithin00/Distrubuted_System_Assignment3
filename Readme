@@ -14,3 +14,4 @@ Steps to Run the Paxos Code
     3. But if you want start each 9 nodes manually with manual configuration, first run the PaxosNode file,
        then run the acceptors first, in my zip code, m1 is the proposer, rest all are acceptors, so run rest and at last run m1.
        using the run button of IDE intellij.
+I have attached the testing pdf document with detailed information on testing.
