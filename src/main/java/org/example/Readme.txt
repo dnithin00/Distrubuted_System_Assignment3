@@ -13,3 +13,4 @@ Steps to Run the Paxos Code
        then run the acceptors first, in my zip code, m1 is the proposer, rest all are acceptors, so run rest and at last run m1.
        using the run button of IDE intellij.
 
+Readme file also in main directory
